@@ -5,7 +5,6 @@ const userRoutes = require("./routes/user");
 const blogRoutes = require("./routes/blogs");
 const commentRoutes = require("./routes/comments");
 
-// Initialize App
 const app = express();
 const PORT = 5000;
 
@@ -22,11 +21,11 @@ app.use("/auth", userRoutes);
 app.use("/server/blogs", blogRoutes);
 app.use("/server/comments", commentRoutes);
 
-// Connect to MongoDB and start server
+// Connect to MongoDB
 mongoose
   .connect(MONGODB_STRING, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {
-    app.locals.JWT_SECRET_KEY = JWT_SECRET_KEY; // Store secret key in app.locals
+    app.locals.JWT_SECRET_KEY = JWT_SECRET_KEY;
     app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
   })
-  .catch((error) => console.log("Database connection failed:", error.message));
+  .catch((error) => console.error("Database connection failed:", error.message));
